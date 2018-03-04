@@ -31,7 +31,7 @@ public class OddsService {
 	public ArrayList<ArrayList<Integer>> getAllSuccessOddsList(String url) throws Exception {
 		ArrayList<ArrayList<Integer>> allOddsList = new ArrayList<>();
 
-		Elements doc = htmlService.getContent(url);
+		Elements doc = htmlService.getContentOfUrlPage(url);
 		allOddsList.add(htmlService.getResultOfOddsByClass(doc, "pu1", "q"));
 		allOddsList.add(htmlService.getResultOfOddsByClass(doc, "pu2", "q"));
 		allOddsList.add(htmlService.getResultOfOddsByClass(doc, "pu3", "q"));
@@ -52,7 +52,7 @@ public class OddsService {
 	public ArrayList<ArrayList<Integer>> getAllOddsList(String url) throws Exception {
 		ArrayList<ArrayList<Integer>> allOddsList = new ArrayList<>();
 
-		Elements doc = htmlService.getContent(url);
+		Elements doc = htmlService.getContentOfUrlPage(url);
 		allOddsList.add(htmlService.getOddsByClass(doc, "pu1"));
 		allOddsList.add(htmlService.getOddsByClass(doc, "pu2"));
 		allOddsList.add(htmlService.getOddsByClass(doc, "pu3"));

@@ -6,7 +6,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.bet.app.dao.StatsDAO;
+import org.bet.app.entities.FootballMatchEntity;
+import org.bet.app.services.FileService;
+import org.bet.app.services.HtmlService;
 import org.bet.app.services.OddsService;
+import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +29,23 @@ public class OddsController {
 	@Autowired
 	private StatsDAO statsDao;
 	
+	@Autowired
+	private FileService fileService;
+	
+	@Autowired
+	private HtmlService htmlService;
+	
+	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	public String test() throws Exception{
+		betLogger.info("Requête de test reçue.");
+		
+		Elements rows = htmlService.getContentOfUrlPage("http://www.prosoccer.gr/en/2017/10/soccer-predictions-2017-10-17.html");
+		ArrayList<FootballMatchEntity> matchsList = htmlService.getListFromPageContent(rows);
+		fileService.writeToCSV(matchsList);
+		
+		return "Test ok.";
+	}
+	
 	@RequestMapping(value = "/commitOdd", method = RequestMethod.GET)
 	public String commitOdd(HttpServletRequest req, HttpServletResponse res) throws Exception{
 		
@@ -33,7 +54,7 @@ public class OddsController {
 		
 		oddsService.commitOdd(oddsService.getAllOddsList(url), oddsService.getAllSuccessOddsList(url), url, date);	
 		
-		return "testok";
+		return "Commit ok.";
 	}
 	
 	@RequestMapping(value = "/odds", method = RequestMethod.GET)

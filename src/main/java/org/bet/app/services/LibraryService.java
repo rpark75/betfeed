@@ -2,6 +2,9 @@ package org.bet.app.services;
 
 import java.util.ArrayList;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class LibraryService {
 
 	public static ArrayList<String> getTypesFromSite(String site){
